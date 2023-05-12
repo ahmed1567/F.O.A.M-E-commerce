@@ -1,6 +1,10 @@
 const express =require("express");
 const mongoose =require("mongoose");
 const dotenv = require("dotenv");
+const cookieParser=require('cookie-parser')
+
+
+///models
 const {User} =require("./models/user.model")
 const {Product} =require("./models/product.model")
 const {Order} =require("./models/order.model")
@@ -32,6 +36,10 @@ const connect =async ()=>{
 //for requests body
 app.use(express.json());
 
+//cookies
+app.use(cookieParser());
+
+
 //Routes Endpoints
 app.use("/api/product", productRouter);    
 app.use("/api/user", userRouter);    
@@ -40,6 +48,13 @@ app.use("/api/review", reviewRouter);
 app.use("/api/message", messageRouter);    
 app.use("/api/conversation", conversationRouter);    
 app.use("/api/auth", authRouter);    
+
+//error handling
+app.use((err,req,res,next)=>{
+    const errorStatus= err.status || 500
+    const errorMessage= err.message || "something went wrong"
+    return res.status(errorStatus).send(errorMessage)
+})
 
 
 app.listen(3000 ,()=>{

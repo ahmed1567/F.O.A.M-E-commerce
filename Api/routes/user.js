@@ -1,9 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const userController = require("../controllers/userController");
+const {deleteUser} = require("../controllers/userController");
+const {verifyToken}= require("../middlewares/jwt")
 
 
-router.post("/register", userController.post);
+router.delete("/:id",verifyToken ,deleteUser);
 
 
 module.exports = router;
