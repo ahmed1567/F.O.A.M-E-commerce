@@ -1,9 +1,12 @@
 const {User} =require("../models/user.model")
 const bcrypt =require("bcrypt")
+const jwt = require("jsonwebtoken")
+const {errorHandler}=require("../Helpers/errorHandler")
 
 
-const register = async (req, res) => {
-    try {
+
+const register = async (req, res,next) => {
+      try {
       console.log(req.body.password);
       const hash = bcrypt.hashSync(req.body.password, 5);
       const newUser = new User({
@@ -14,32 +17,35 @@ const register = async (req, res) => {
       await newUser.save();
       res.status(201).send("User has been created.");
     } catch (error) {
-      console.log(error)
-        res.status(500).send("Internal server error")
+       next(error)
     }
   
 };
-const login = async (req, res) => {
+const login = async (req, res,next) => {
   try {
 
     const user = await User.findOne({username:req.body.username})
-console.log(user)
-    if(!user) return res.status(404).send("User Not Found") 
+    if(!user) return next(errorHandler(404,"User not found"))
 
     const isCorrect =bcrypt.compareSync(req.body.password,user.password)
     
-    if(!isCorrect) return res.status(400).send("Wrong Password") 
-
-
-    res.status(200).send("User found");
+    if(!isCorrect) return next(errorHandler(400,"Wrong Password")) 
+    
+    const { password, ...info } = user._doc;
+    
+    const token =jwt.sign({
+      id:user._id,
+      isSeller:user.isSeller,
+    },process.env.JWT_KEY)
+    
+    res.cookie("accessToken",token,{httpOnly:true}).status(200).send(info);
   } catch (error) {
-    console.log(error)
-      res.status(500).send("Internal server error")
+      next(error)
   }
 
 };
 const logout = async (req, res) => {
-    return res.send("dsdffdfdfd")
+    res.clearCookie("accessToken",{sameSite:"none",secure:true}).status(200).send("User has been logout")
   };
 
 
