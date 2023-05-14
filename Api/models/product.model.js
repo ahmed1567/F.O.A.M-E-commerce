@@ -4,7 +4,11 @@ const {Schema}=mongoose;
 
 const productSchema = new Schema(
     {
-      name: {
+      userId: {
+        type: String,
+        required: true,
+      },
+      title: {
         type: String,
         required: true,
       },
@@ -20,7 +24,7 @@ const productSchema = new Schema(
         type: Number,
         default: 0,
       },
-      category: {
+      cat: {
         type: String,
         required: true,
       },
@@ -37,6 +41,10 @@ const productSchema = new Schema(
         required: false,
       },
       shortTitle: {
+        type: String,
+        required: true,
+      },    
+      shortDesc: {
         type: String,
         required: true,
       },

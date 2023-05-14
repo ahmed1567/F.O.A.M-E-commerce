@@ -1,9 +1,14 @@
 var express = require("express");
 var router = express.Router();
-const userController = require("../controllers/productController");
+const {creatProduct ,deleteProduct,getProduct,getProducts} = require("../controllers/productController");
+const { verifyToken } = require("../middlewares/jwt");
 
 
-router.get("/post", userController.post);
+router.post("/",verifyToken,creatProduct);
+router.delete("/:id",verifyToken,deleteProduct);
+router.get("/",getProducts);
+router.get("/single/:id",getProduct);
+
 
 
 module.exports = router;
