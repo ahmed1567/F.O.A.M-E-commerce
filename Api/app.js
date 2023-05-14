@@ -2,6 +2,7 @@ const express =require("express");
 const mongoose =require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser=require('cookie-parser')
+const cors =require('cors')
 
 
 ///models
@@ -33,6 +34,9 @@ const connect =async ()=>{
     console.log("backend server is runing")
 }
 
+//our cors
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
+
 //for requests body
 app.use(express.json());
 
@@ -41,12 +45,12 @@ app.use(cookieParser());
 
 
 //Routes Endpoints
-app.use("/api/product", productRouter);    
-app.use("/api/user", userRouter);    
-app.use("/api/order", orderRouter);    
-app.use("/api/review", reviewRouter);    
-app.use("/api/message", messageRouter);    
-app.use("/api/conversation", conversationRouter);    
+app.use("/api/products", productRouter);    
+app.use("/api/users", userRouter);    
+app.use("/api/orders", orderRouter);    
+app.use("/api/reviews", reviewRouter);    
+app.use("/api/messages", messageRouter);    
+app.use("/api/conversations", conversationRouter);    
 app.use("/api/auth", authRouter);    
 
 //error handling

@@ -7,7 +7,7 @@ const {errorHandler}=require("../Helpers/errorHandler")
 
 const register = async (req, res,next) => {
       try {
-      console.log(req.body.password);
+      console.log(req.body);
       const hash = bcrypt.hashSync(req.body.password, 5);
       const newUser = new User({
         ...req.body,

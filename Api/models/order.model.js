@@ -16,7 +16,7 @@ const orderSchema = new Schema(
           type: String,
           required: true,
         },
-        address: {
+        title: {
           type: String,
           required: true,
         },
@@ -32,6 +32,10 @@ const orderSchema = new Schema(
         payment_intent: {
           type: String,
           required: true,
+        },
+        img: {
+          type: String,
+          required: false,
         },
       },
       {
