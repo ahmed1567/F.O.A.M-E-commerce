@@ -1,4 +1,4 @@
-const { Product } = require("../models/product.model");
+const { Gig } = require("../models/gig.model");
 const { Order } = require("../models/order.model");
 
 
@@ -8,10 +8,10 @@ const { errorHandler } = require("../Helpers/errorHandler");
 const intent = async (req, res,next) => {
   const stripe = new Stripe(process.env.STRIPE);
 
-  const product = await Product.findById(req.params.id);
+  const gig = await Gig.findById(req.params.id);
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: product.price * 100,
+    amount: gig.price * 100,
     currency: "usd",
     automatic_payment_methods: {
       enabled: true,
@@ -19,12 +19,12 @@ const intent = async (req, res,next) => {
   });
 
   const newOrder = new Order({
-    productId: product._id,
-    img: product.cover,
-    title: product.title,
+    gigId: gig._id,
+    img: gig.cover,
+    title: gig.title,
     buyerId: req.userId,
-    sellerId: product.userId,
-    price: product.price,
+    sellerId: gig.userId,
+    price: gig.price,
     payment_intent: paymentIntent.id,
   });
 

@@ -4,7 +4,7 @@ const {Schema}=mongoose;
 
 const reviewSchema = new Schema(
     {
-        productId: {
+        gigId: {
           type: String,
           required: true,
         },

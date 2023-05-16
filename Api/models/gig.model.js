@@ -2,7 +2,7 @@ const mongoose =require("mongoose");
 const {Schema}=mongoose;
 
 
-const productSchema = new Schema(
+const gigSchema = new Schema(
     {
       userId: {
         type: String,
@@ -72,5 +72,5 @@ const productSchema = new Schema(
   
 
 module.exports ={
-    Product:mongoose.model("Product", productSchema)
+    Gig:mongoose.model("Gig", gigSchema)
 } 

@@ -1,4 +1,4 @@
-const { Product } = require("../models/product.model");
+const { Gig } = require("../models/gig.model");
 const { Review } = require("../models/review.model");
 const { errorHandler } = require("../Helpers/errorHandler");
 
@@ -8,27 +8,27 @@ const createReview = async (req, res, next) => {
 
   const newReview = new Review({
     userId: req.userId,
-    productId: req.body.productId,
+    gigId: req.body.gigId,
     desc: req.body.desc,
     star: req.body.star,
   });
 
   try {
     const review = await Review.findOne({
-      productId: req.body.productId,
+      gigId: req.body.gigId,
       userId: req.userId,
     });
 
     if (review)
       return next(
-        errorHandler(403, "You have already created a review for this product!")
+        errorHandler(403, "You have already created a review for this gig!")
       );
 
     //TODO: check if the user purchased the product.
 
     const savedReview = await newReview.save();
 
-    await Product.findByIdAndUpdate(req.body.productId, {
+    await Gig.findByIdAndUpdate(req.body.gigId, {
       $inc: { totalStars: req.body.star, starNumber: 1 },
     });
     res.status(201).send(savedReview);
@@ -40,7 +40,7 @@ const createReview = async (req, res, next) => {
 
 const getReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ productId: req.params.productId });
+    const reviews = await Review.find({ gigId: req.params.gigId });
     res.status(200).send(reviews);
   } catch (err) {
     next(err);

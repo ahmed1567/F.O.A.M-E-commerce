@@ -7,7 +7,7 @@ const cors =require('cors')
 
 ///models
 const {User} =require("./models/user.model")
-const {Product} =require("./models/product.model")
+const {Gig} =require("./models/gig.model")
 const {Order} =require("./models/order.model")
 const {Review} =require("./models/review.model")
 const {Message} =require("./models/message.model")
@@ -18,7 +18,7 @@ const {Conversation}=require("./models/conversation.model")
 dotenv.config();
 
 //Routes files
-const productRouter = require("./routes/product");
+const gigRouter = require("./routes/gig");
 const userRouter = require("./routes/user");
 const orderRouter = require("./routes/order");
 const reviewRouter = require("./routes/review");
@@ -45,7 +45,7 @@ app.use(cookieParser());
 
 
 //Routes Endpoints
-app.use("/api/products", productRouter);    
+app.use("/api/Gigs", gigRouter);    
 app.use("/api/users", userRouter);    
 app.use("/api/orders", orderRouter);    
 app.use("/api/reviews", reviewRouter);    
