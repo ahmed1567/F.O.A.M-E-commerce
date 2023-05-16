@@ -10,7 +10,7 @@ const { verifyToken } = require("../middlewares/jwt");
 
 router.post("/", verifyToken, creatProduct);
 router.delete("/:id", verifyToken, deleteProduct);
-router.get("/", getProducts);
 router.get("/single/:id", getProduct);
+router.get("/", getProducts);
 
 module.exports = router;
