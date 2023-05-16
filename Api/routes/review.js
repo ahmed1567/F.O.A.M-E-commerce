@@ -1,9 +1,12 @@
 var express = require("express");
 var router = express.Router();
-const userController = require("../controllers/reviewController");
+const {createReview,getReviews,deleteReview} = require("../controllers/reviewController");
+const { verifyToken } = require("../middlewares/jwt");
 
 
-router.get("/post", userController.post);
+router.post("/", verifyToken, createReview )
+router.get("/:productId", getReviews )
+router.delete("/:id",verifyToken, deleteReview)
 
 
 module.exports = router;
