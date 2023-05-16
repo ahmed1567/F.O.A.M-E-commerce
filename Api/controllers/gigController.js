@@ -5,6 +5,7 @@ const creatGig = async (req, res ,next) => {
   if (!req.isSeller)
   return next(errorHandler(403, "Only sellers can create a gig!"));
 console.log(req.userId)
+console.log(req.body)
   const newGig = new Gig({
     ...req.body,
     userId: req.userId,
