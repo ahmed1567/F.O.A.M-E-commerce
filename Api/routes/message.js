@@ -1,9 +1,11 @@
 var express = require("express");
 var router = express.Router();
-const userController = require("../controllers/messageController");
+const {createMessage,getMessages} = require("../controllers/messageController");
+const { verifyToken } = require("../middlewares/jwt");
 
 
-router.get("/post", userController.post);
+router.post("/", verifyToken, createMessage);
+router.get("/:id", verifyToken, getMessages);
 
 
 module.exports = router;
