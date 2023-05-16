@@ -1,9 +1,7 @@
 const post = async (req, res) => {
-    return res.send("dsdffdfdfd")
-  };
+  return res.send("dsdffdfdfd");
+};
 
-
-  module.exports = {
-    post
-
-  };
+module.exports = {
+  post,
+};
