@@ -36,13 +36,13 @@ const gigSchema = new Schema(
         type: String,
         required: false,
       },
-      images: {
-        type: [String],
+      image: {
+        type: String,
         required: false,
       },
       shortTitle: {
         type: String,
-        required: true,
+        required: false,
       },    
       shortDesc: {
         type: String,
