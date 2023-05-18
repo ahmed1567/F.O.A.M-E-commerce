@@ -4,6 +4,7 @@ const { Gig } = require("../models/gig.model");
 const creatGig = async (req, res ,next) => {
   if (!req.isSeller)
   return next(errorHandler(403, "Only sellers can create a gig!"));
+  req.body.cover="https://cdn-icons-png.flaticon.com/512/951/951971.png";
 console.log(req.userId)
 console.log(req.body)
   const newGig = new Gig({
@@ -46,6 +47,7 @@ const getGig = async (req, res ,next) => {
 
 const getGigs = async (req, res ,next) => {
   const q = req.query;
+  console.log(q.userId)
   const filters = {
     ...(q.userId && { userId: q.userId }),//using spread operation (...)
     ...(q.cat && { cat: q.cat }),
