@@ -1,12 +1,13 @@
 const { Gig } = require("../models/gig.model");
 const { Order } = require("../models/order.model");
+// const Stripe =require("strip");
+const stripe = require("stripe")(process.env.STRIPE);
 
 
 const { errorHandler } = require("../Helpers/errorHandler");
 
 
 const intent = async (req, res,next) => {
-  const stripe = new Stripe(process.env.STRIPE);
 
   const gig = await Gig.findById(req.params.id);
 
